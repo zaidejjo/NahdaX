@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NahdaX | المنصة التعليمية الرائدة</title>
+    <link rel="icon" type="image/jpeg" href="NahdaX.jpeg">
+    <link rel="apple-touch-icon" href="NahdaX.jpeg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1e3a8a',
+                        secondary: '#7c3aed',
+                        darkBg: '#0f172a',
+                        darkCard: '#1e293b'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { font-family: 'Cairo', sans-serif; transition: background-color 0.3s, color 0.3s; overflow-x: hidden; }
+
+        /* التحسين للهواتف: تصغير العناوين الكبيرة */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.75rem !important; line-height: 1.2 !important; }
+        }
+
+        .blob {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.2) 0%, rgba(124, 58, 237, 0.2) 100%);
+            filter: blur(60px);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .dark .glass {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-scrolled {
+            padding: 0.5rem 0 !important;
+            background: rgba(255, 255, 255, 0.9) !important;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .dark .nav-scrolled { background: rgba(15, 23, 42, 0.9) !important; }
+
+        .btn-gradient {
+            background: linear-gradient(90deg, #1e3a8a, #7c3aed);
+            transition: all 0.3s ease;
+        }
+
+        /* Mobile Menu Side */
+        #mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        #mobile-menu.active { transform: translateX(0); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-darkBg dark:text-slate-100">
+
+    <div id="preloader" class="fixed inset-0 z-[100] bg-white dark:bg-darkBg flex items-center justify-center transition-opacity duration-500">
+        <div class="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-secondary"></div>
+    </div>
+
+    <div class="fixed left-6 bottom-6 z-50 flex flex-col gap-4">
+        <button id="theme-toggle" class="p-4 rounded-full bg-white dark:bg-darkCard shadow-2xl border border-gray-200 dark:border-gray-700 hover:scale-110 transition">
+            <i id="theme-icon" class="fas fa-moon text-xl text-secondary"></i>
+        </button>
+    </div>
+
+    <nav id="navbar" class="fixed w-full z-40 transition-all duration-500 py-4 lg:py-6 px-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <img src="NahdaX.jpeg" alt="Logo" class="h-10 w-auto rounded-lg shadow-md">
+                <span class="text-xl lg:text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">NahdaX</span>
+            </div>
+
+            <div class="hidden lg:flex items-center space-x-8 space-x-reverse">
+                <a href="#home" class="font-bold hover:text-secondary transition">الرئيسية</a>
+                <a href="#services" class="font-bold hover:text-secondary transition">الخدمات</a>
+                <a href="#portfolio" class="font-bold hover:text-secondary transition">أعمالنا</a>
+                <a href="#contact" class="btn-gradient text-white px-6 py-2.5 rounded-full font-bold">ابدأ الآن</a>
+            </div>
+
+            <button class="lg:hidden text-2xl p-2" id="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div id="mobile-menu" class="fixed inset-0 z-50 bg-white dark:bg-darkBg lg:hidden p-8 flex flex-col">
+        <div class="flex justify-between items-center mb-12">
+            <span class="text-2xl font-black text-secondary">القائمة</span>
+            <button id="close-menu" class="text-3xl">&times;</button>
+        </div>
+        <div class="flex flex-col gap-8 text-xl font-bold">
+            <a href="#home" class="mobile-link">الرئيسية</a>
+            <a href="#services" class="mobile-link">خدماتنا</a>
+            <a href="#portfolio" class="mobile-link">أعمالنا</a>
+            <a href="#faq" class="mobile-link">الأسئلة الشائعة</a>
+            <a href="#contact" class="btn-gradient text-white text-center py-4 rounded-2xl">تواصل معنا</a>
+        </div>
+    </div>
+
+    <section id="home" class="relative min-h-screen flex items-center pt-24 pb-12 overflow-hidden">
+        <div class="blob top-10 right-0"></div>
+        <div class="container mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center relative z-10">
+            <div data-aos="fade-up">
+                <h1 class="hero-title text-5xl lg:text-8xl font-black mb-6">
+                    مستقبل <span class="text-secondary">التعليم</span> <br>بين يديك
+                </h1>
+                <p class="text-lg text-slate-600 dark:text-slate-400 mb-8 max-w-xl border-r-4 border-secondary pr-4">
+                    نحن في NahdaX نؤمن أن التكنولوجيا هي المحرك الرئيسي للنهضة. نبني منصات تتكيف مع عقل الطالب.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="https://wa.me/962781551666" class="btn-gradient text-white px-8 py-4 rounded-2xl font-black text-center flex items-center justify-center gap-2">
+                        استشارة مجانية <i class="fab fa-whatsapp text-xl"></i>
+                    </a>
+                    <button class="px-8 py-4 rounded-2xl border-2 border-slate-200 dark:border-slate-700 font-bold hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+                        شاهد أعمالنا
+                    </button>
+                </div>
+            </div>
+
+            <div class="relative mt-12 lg:mt-0" data-aos="zoom-in">
+                <div class="rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white dark:border-slate-800">
+                    <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80" alt="Hero" class="w-full h-full object-cover">
+                </div>
+                <div class="absolute -bottom-6 -right-4 lg:-right-10 glass p-4 rounded-2xl shadow-xl animate-bounce">
+                    <div class="flex items-center gap-3">
+                        <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                        <span class="font-bold text-sm text-slate-800 dark:text-white">+1,200 طالب نشط</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-white dark:bg-slate-900 border-y border-slate-100 dark:border-slate-800">
+        <div class="container mx-auto px-6 grid grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="text-center" data-aos="fade-up">
+                <div class="text-3xl lg:text-5xl font-black text-primary mb-1">+150</div>
+                <div class="text-xs uppercase font-bold opacity-60">مشروع منجز</div>
+            </div>
+            <div class="text-center" data-aos="fade-up" data-aos-delay="100">
+                <div class="text-3xl lg:text-5xl font-black text-secondary mb-1">98%</div>
+                <div class="text-xs uppercase font-bold opacity-60">نسبة الرضا</div>
+            </div>
+            <div class="text-center" data-aos="fade-up" data-aos-delay="200">
+                <div class="text-3xl lg:text-5xl font-black text-primary mb-1">+20k</div>
+                <div class="text-xs uppercase font-bold opacity-60">ساعة عمل</div>
+            </div>
+            <div class="text-center" data-aos="fade-up" data-aos-delay="300">
+                <div class="text-3xl lg:text-5xl font-black text-secondary mb-1">45</div>
+                <div class="text-xs uppercase font-bold opacity-60">شريك نجاح</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="py-24">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl lg:text-5xl font-black mb-4 italic">خدماتنا النوعية</h2>
+                <div class="h-1.5 w-20 bg-secondary mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 lg:gap-10">
+                <div class="glass p-8 rounded-[2rem] hover:translate-y-[-10px] transition duration-300 border-b-4 border-primary" data-aos="fade-up">
+                    <div class="w-16 h-16 bg-blue-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center mb-6 text-primary text-3xl">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">أنظمة LMS ذكية</h3>
+                    <p class="opacity-70 text-sm leading-relaxed mb-4">منصات تتبع مسار الطالب بالذكاء الاصطناعي وتوليد تقارير دورية.</p>
+                </div>
+
+                <div class="glass p-8 rounded-[2rem] hover:translate-y-[-10px] transition duration-300 border-b-4 border-secondary" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-16 h-16 bg-purple-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center mb-6 text-secondary text-3xl">
+                        <i class="fas fa-vr-cardboard"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">واقع معزز AR/VR</h3>
+                    <p class="opacity-70 text-sm leading-relaxed mb-4">تحويل المناهج الجافة إلى تجارب تفاعلية ثلاثية الأبعاد مذهلة.</p>
+                </div>
+
+                <div class="glass p-8 rounded-[2rem] hover:translate-y-[-10px] transition duration-300 border-b-4 border-primary" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-16 h-16 bg-blue-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center mb-6 text-primary text-3xl">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">تطبيقات تعليمية</h3>
+                    <p class="opacity-70 text-sm leading-relaxed mb-4">بناء تطبيقات موبايل (iOS & Android) تدعم التعلم المصغر.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio" class="py-24 bg-slate-900 text-white overflow-hidden">
+        <div class="container mx-auto px-6 text-center lg:text-right">
+            <h2 class="text-4xl font-black mb-12">معرض المشاريع</h2>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="group relative overflow-hidden rounded-3xl aspect-square shadow-2xl" data-aos="zoom-in" data-aos-delay="200">
+                    <img src="logo-taalomi.jpg" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-primary to-transparent opacity-0 group-hover:opacity-90 transition-opacity duration-500 flex flex-col justify-end p-8">
+                        <span class="text-sm font-bold text-blue-300 mb-2 uppercase tracking-widest">School System</span>
+                        <h4 class="text-2xl font-black mb-4">Axonx</h4>
+                        <button class="w-fit bg-white text-primary px-6 py-2 rounded-full font-bold text-sm"><a href="https://taalomi-fi-yadi.onrender.com" class="">عرض التفاصيل</a></button>
+                    </div>
+                </div>
+
+                <div class="group relative overflow-hidden rounded-3xl aspect-square shadow-2xl" data-aos="zoom-in" data-aos-delay="200">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-primary to-transparent opacity-0 group-hover:opacity-90 transition-opacity duration-500 flex flex-col justify-end p-8">
+                        <span class="text-sm font-bold text-blue-300 mb-2 uppercase tracking-widest">VR</span>
+                        <h4 class="text-2xl font-black mb-4">المختبر الافتراضي</h4>
+                        <button class="w-fit bg-white text-primary px-6 py-2 rounded-full font-bold text-sm">عرض التفاصيل</button>
+                    </div>
+                </div>
+                <div class="group relative overflow-hidden rounded-3xl aspect-square shadow-2xl" data-aos="zoom-in" data-aos-delay="200">
+                    <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-primary to-transparent opacity-0 group-hover:opacity-90 transition-opacity duration-500 flex flex-col justify-end p-8">
+                        <span class="text-sm font-bold text-blue-300 mb-2 uppercase tracking-widest">AI Solution</span>
+                        <h4 class="text-2xl font-black mb-4">نظام التحليل البيومتري للطلاب</h4>
+                        <button class="w-fit bg-white text-primary px-6 py-2 rounded-full font-bold text-sm">عرض التفاصيل</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="py-32">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-20" data-aos="fade-up">
+                    <h2 class="text-4xl font-black mb-4">قالوا عن NahdaX</h2>
+                    <div class="h-1.5 w-24 bg-secondary mx-auto rounded-full"></div>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                    <div class="glass p-8 rounded-3xl relative" data-aos="fade-up">
+                        <i class="fas fa-quote-right text-5xl absolute top-6 left-6 opacity-10 text-secondary"></i>
+                        <p class="mb-8 opacity-80 leading-relaxed italic">"فريق عمل NahdaX لم يبنِ لنا موقعاً فحسب، بل بنى لنا نظاماً متكاملاً أدى لزيادة مبيعات دوراتنا بنسبة 300% في أول ستة أشهر."</p>
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 bg-slate-200 rounded-full overflow-hidden">
+                                <img src="https://i.pravatar.cc/150?u=120" alt="User">
+                            </div>
+                            <div>
+                                <div class="font-bold">د. خالد المنصور</div>
+                                <div class="text-sm opacity-60">مدير أكاديمية رؤية</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass p-8 rounded-3xl relative" data-aos="fade-up" data-aos-delay="100">
+                        <i class="fas fa-quote-right text-5xl absolute top-6 left-6 opacity-10 text-secondary"></i>
+                        <p class="mb-8 opacity-80 leading-relaxed italic">"أشكر NahdaX على تقديمهم نظاماً متكاملاً واحترافياً ساعدنا في تنظيم المحتوى الأكاديمي ووصوله للطلاب بكل سلاسة."</p>
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 bg-slate-200 rounded-full overflow-hidden">
+                                <img src="https://i.pravatar.cc/150?u=18" alt="User">
+                            </div>
+                            <div>
+                                <div class="font-bold">د. منار الحاسي</div>
+                                <div class="text-sm opacity-60">دكتورة في الجامعة الأردنية</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    </div>
+            </div>
+        </section>
+
+
+    <section id="faq" class="py-24 bg-slate-100 dark:bg-slate-800/30">
+        <div class="container mx-auto px-6 max-w-3xl">
+            <h2 class="text-3xl font-black text-center mb-12">الأسئلة الشائعة</h2>
+            <div class="space-y-4">
+                <details class="glass rounded-2xl group outline-none">
+                    <summary class="flex justify-between items-center p-6 cursor-pointer font-bold list-none outline-none">
+                        <span>كم يستغرق بناء المنصة؟</span>
+                        <i class="fas fa-plus group-open:rotate-45 transition text-secondary"></i>
+                    </summary>
+                    <div class="px-6 pb-6 text-sm opacity-70">
+                        غالباً ما يستغرق الأمر ما بين 8 إلى 12 أسبوعاً للوصول لنسخة تجريبية كاملة حسب المميزات.
+                    </div>
+                </details>
+                <details class="glass rounded-2xl group outline-none">
+                    <summary class="flex justify-between items-center p-6 cursor-pointer font-bold list-none outline-none">
+                        <span>هل توفرون الدعم التقني؟</span>
+                        <i class="fas fa-plus group-open:rotate-45 transition text-secondary"></i>
+                    </summary>
+                    <div class="px-6 pb-6 text-sm opacity-70">
+                        نعم، نوفر دعم فني شامل على مدار الساعة وخطط صيانة دورية.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-24">
+        <div class="container mx-auto px-6">
+            <div class="glass p-8 lg:p-16 rounded-[3rem] shadow-2xl overflow-hidden relative">
+                <div class="grid lg:grid-cols-2 gap-12 relative z-10">
+                    <div>
+                        <h2 class="text-4xl font-black mb-6">ابدأ مشروعك <br><span class="text-secondary">مع الخبراء</span></h2>
+                        <p class="opacity-70 mb-8">سيقوم مستشارنا بالتواصل معك خلال 24 ساعة لتقديم تحليل مجاني لفكرتك.</p>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-4">
+                                <i class="fas fa-phone-alt text-secondary"></i>
+                                <span dir="ltr"><a href="tel:+962781551666">078 1551 666</a></span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <i class="fas fa-envelope text-primary"></i>
+                                <span><a href="mailto:zaidejjo@gmail.com" class="classname">zaidejjo@gmail.com </a></span>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="space-y-4">
+                        <input type="text" placeholder="الاسم" class="w-full p-4 rounded-xl bg-slate-50 dark:bg-slate-900 border-none focus:ring-2 focus:ring-secondary outline-none">
+                        <input type="email" placeholder="البريد" class="w-full p-4 rounded-xl bg-slate-50 dark:bg-slate-900 border-none focus:ring-2 focus:ring-secondary outline-none">
+                        <textarea placeholder="رسالتك" rows="4" class="w-full p-4 rounded-xl bg-slate-50 dark:bg-slate-900 border-none focus:ring-2 focus:ring-secondary outline-none"></textarea>
+                        <button class="w-full btn-gradient text-white py-4 rounded-xl font-black text-lg shadow-lg">إرسال الطلب</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-950 text-white pt-20 pb-10">
+        <div class="container mx-auto px-6 text-center lg:text-right">
+            <div class="grid lg:grid-cols-3 gap-12 mb-12 border-b border-slate-800 pb-12">
+                <div>
+                    <div class="flex items-center gap-3 mb-6 justify-center lg:justify-start">
+                        <img src="NahdaX.jpeg" class="h-10 rounded-lg">
+                        <span class="text-3xl font-black">NahdaX</span>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed">المؤسسة الرائدة في منطقة الشرق الأوسط لتحويل التعليم التقليدي إلى تجربة رقمية استثنائية.</p>
+                </div>
+                <div class="flex flex-wrap justify-center gap-6">
+                    <a href="https://x.com/zaid_ejjo/" class="text-2xl hover:text-secondary transition"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/zaidejjo/" class="text-2xl hover:text-secondary transition"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-2xl hover:text-secondary transition"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <p class="text-slate-500 text-xs">© 2026 جميع الحقوق محفوظة لشركة NahdaX</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true });
+
+        // Preloader
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            preloader.style.opacity = '0';
+            setTimeout(() => preloader.style.display = 'none', 500);
+        });
+
+        // Navbar Scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 30) navbar.classList.add('nav-scrolled');
+            else navbar.classList.remove('nav-scrolled');
+        });
+
+        // Mobile Menu Logic
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const closeBtn = document.getElementById('close-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const links = document.querySelectorAll('.mobile-link');
+
+        const toggleMenu = () => mobileMenu.classList.toggle('active');
+
+        menuBtn.addEventListener('click', toggleMenu);
+        closeBtn.addEventListener('click', toggleMenu);
+        links.forEach(link => link.addEventListener('click', toggleMenu));
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const html = document.documentElement;
+
+        if (localStorage.getItem('theme') === 'dark') {
+            html.classList.add('dark');
+            themeIcon.classList.replace('fa-moon', 'fa-sun');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            const isDark = html.classList.contains('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            themeIcon.classList.replace(isDark ? 'fa-moon' : 'fa-sun', isDark ? 'fa-sun' : 'fa-moon');
+        });
+    </script>
+</body>
+</html>
